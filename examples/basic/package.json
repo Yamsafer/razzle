@@ -10,8 +10,12 @@
   },
   "dependencies": {
     "express": "^4.15.2",
+    "material-ui": "^0.20.0",
     "react": "^16.0.0",
-    "react-dom": "^16.0.0"
+    "react-dom": "^16.0.0",
+    "yamsafer-universal": "1.0.0",
+    "redux-act": "^1.2.0",
+    "redux": "^3.7.2"
   },
   "devDependencies": {
     "raf": "^3.3.2",
