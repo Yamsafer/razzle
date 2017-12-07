@@ -1,14 +1,9 @@
 import React from 'react';
-import AppBar from 'material-ui/AppBar';
-import Drawer from 'material-ui/Drawer';
-import MenuItem from 'material-ui/MenuItem';
+import Drawer from './containers/Drawer';
 
 const App = () => (
   <div>
-    <AppBar
-      title="Title"
-      iconClassNameRight="muidocs-icon-navigation-expand-more"
-    />
+    <Drawer />
   </div>
 );
 

@@ -13,11 +13,8 @@ import Cache from './CacheManager';
 import checkBrowserSupport from '../utils/isSupportedBrowser';
 
 export default function createServer(configs) {
-  console.log('INITIAITED');
   return async function(req, res) {
-    console.log('Will create context');
     const context = await createContext(req, res, configs);
-    console.log('createContext Success');
     const cacheKey = configs.computeCacheKey(context);
     return Cache.getItemAsync(cacheKey, {
       async callback() {

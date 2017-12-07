@@ -1,4 +1,3 @@
-import React from 'react';
 import express from 'express';
 import { createServer } from 'yamsafer-universal/build/server';
 
@@ -16,8 +15,9 @@ const universalServer = createServer({
   computeCacheKey() {
     return null;
   },
-
-  // bootstrap,
+  bootstrap({ store }) {
+    console.log(store.getState());
+  },
   // PageNotFound,
   // PageServerError,
 });

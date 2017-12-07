@@ -1,15 +1,6 @@
-import { combineReducers } from 'redux';
-import { createAction, createReducer } from 'redux-act';
+import DrawerReducer from './containers/Drawer/reducer';
+import { BRANCH_NAME as DRAWER } from './containers/Drawer/constants';
 
-export const toggle = createAction('Toggle Drawer');
-
-const drawerReducer = createReducer(
-  {
-    [toggle]: state => !state,
-  },
-  false
-);
-
-export default combineReducers({
-  drawer: drawerReducer,
-});
+export default {
+  [DRAWER]: DrawerReducer,
+};
