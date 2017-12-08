@@ -12,17 +12,7 @@ function Layout({
   Prefetch,
   Globals,
   Helmet,
-  context,
 }) {
-  const { userAgent } = context;
-  console.log({ userAgent });
-  const muiTheme = getMuiTheme(
-    {},
-    {
-      userAgent,
-    }
-  );
-
   return (
     <html>
       <Head>
@@ -34,15 +24,17 @@ function Layout({
           name="viewport"
           content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=0"
         />
+        <link
+          href="//cdn.muicss.com/mui-0.9.30/css/mui.min.css"
+          rel="stylesheet"
+          type="text/css"
+          media="screen"
+        />
       </Head>
       <Body>
-        <div id="app">
-          <App>
-            <MuiThemeProvider muiTheme={muiTheme}>
-              <Route />
-            </MuiThemeProvider>
-          </App>
-        </div>
+        <App>
+          <Route />
+        </App>
         <Globals />
         <Scripts />
         <Prefetch />

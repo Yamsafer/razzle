@@ -69,14 +69,13 @@ function createGlobals({ initialState, reactContext, errorType }) {
   return Globals;
 }
 
-function createApp({ store, locale, reactContext }) {
+function createApp({ store, locale, reactContext, Providers }) {
   const TheApp = ({ children }) => {
     const asString = ReactDOM.renderToString(
       <App store={store} context={reactContext} locale={locale}>
-        {children}
+        <Providers context={reactContext}>{children}</Providers>
       </App>
     );
-
     return (
       <div
         id="app"
@@ -112,12 +111,13 @@ export default function createFragments({
   locale,
   route,
   store,
-  reactContext,
   errorType,
+  Providers,
+  reactContext,
 }) {
   const initialState = store.getState();
   const Route = () => route.component;
-  const App = createApp({ locale, store, reactContext });
+  const App = createApp({ locale, store, reactContext, Providers });
   const Globals = createGlobals({ initialState, reactContext, errorType });
   const { Scripts, Preload, Prefetch } = createScriptLoaders({ assets, route });
   const HelmetComponent = createHelmet(Helmet.rewind());

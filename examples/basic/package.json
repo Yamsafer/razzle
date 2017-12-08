@@ -9,11 +9,15 @@
     "start:prod": "NODE_ENV=production node build/server.js"
   },
   "dependencies": {
+    "antd": "^3.0.0",
+    "babel-plugin-import": "^1.6.2",
     "express": "^4.15.2",
+    "history": "^4.7.2",
     "immutable": "^3.8.2",
     "material-ui": "^0.20.0",
-    "react": "^16.0.0",
-    "react-dom": "^16.0.0",
+    "muicss": "^0.9.30",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0",
     "react-inline-styler": "^2.0.0",
     "react-intl": "^2.4.0",
     "react-redux": "^5.0.6",
@@ -24,6 +28,7 @@
   },
   "devDependencies": {
     "raf": "^3.3.2",
-    "razzle": "^0.8.6"
+    "razzle": "^0.8.6",
+    "babel-plugin-import": "1.6.2"
   }
 }

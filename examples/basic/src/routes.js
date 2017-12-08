@@ -1,11 +1,20 @@
 import React from 'react';
-import App from './App';
+import Home from './components/Home';
+import Info from './components/Info';
 const routes = [
   {
     path: '',
     action: () => {
       return {
-        component: <App />,
+        component: <Home />,
+      };
+    },
+  },
+  {
+    path: '/info',
+    action: () => {
+      return {
+        component: <Info />,
       };
     },
   },

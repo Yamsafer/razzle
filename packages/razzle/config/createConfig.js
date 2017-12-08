@@ -80,7 +80,7 @@ module.exports = (
         // It is guaranteed to exist because we tweak it in `env.js`
         nodePath.split(path.delimiter).filter(Boolean)
       ),
-      extensions: ['.js', '.json', '.jsx'],
+      extensions: ['.web.js', '.mjs', '.js', '.json', '.web.jsx', '.jsx'],
       alias: {
         // This is required so symlinks work during development.
         'webpack/hot/poll': require.resolve('webpack/hot/poll'),
@@ -118,7 +118,7 @@ module.exports = (
         {
           exclude: [
             /\.html$/,
-            /\.(js|jsx)$/,
+            /\.(js|jsx|mjs)$/,
             /\.(ts|tsx)$/,
             /\.(vue)$/,
             /\.(less)$/,
@@ -395,22 +395,22 @@ module.exports = (
         new webpack.DefinePlugin(dotenv.stringified),
         // Uglify/compress and optimize our JS for production, screw ie8 when
         // possible, React only works > ie9 anyway
-        new UglifyJsPlugin({
-          uglifyOptions: {
-            compress: {
-              warnings: false,
-              // Disabled because of an issue with Uglify breaking seemingly valid code:
-              // https://github.com/facebookincubator/create-react-app/issues/2376
-              // Pending further investigation:
-              // https://github.com/mishoo/UglifyJS2/issues/2011
-              comparisons: false,
-            },
-            output: {
-              comments: false,
-            },
-          },
-          sourceMap: true,
-        }),
+        // new UglifyJsPlugin({
+        //   uglifyOptions: {
+        //     compress: {
+        //       warnings: false,
+        //       // Disabled because of an issue with Uglify breaking seemingly valid code:
+        //       // https://github.com/facebookincubator/create-react-app/issues/2376
+        //       // Pending further investigation:
+        //       // https://github.com/mishoo/UglifyJS2/issues/2011
+        //       comparisons: false,
+        //     },
+        //     output: {
+        //       comments: false,
+        //     },
+        //   },
+        //   sourceMap: true,
+        // }),
         // Extract our CSS into a files.
         new ExtractTextPlugin({
           filename: 'static/css/bundle.[contenthash:8].css',

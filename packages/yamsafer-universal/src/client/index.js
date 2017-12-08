@@ -24,6 +24,14 @@ async function createContext(options) {
   const reactContext = window[SSR_TO_CLIENT_CONTEXT_NAME];
   const errorType = window[__ERROR_TYPE__];
 
+  const Components = Object.assign(
+    {},
+    {
+      Providers: App,
+    },
+    options.Components
+  );
+
   return Object.assign(
     {},
     {
@@ -36,7 +44,8 @@ async function createContext(options) {
       options,
       scrollPositionsHistory: {},
     },
-    options
+    options,
+    Components
   ); // TODO: change locations that use options props to use options.props.
 }
 
@@ -105,13 +114,13 @@ async function cancelRunningTasks(context) {
 function render(context) {
   return new Promise((resolve, reject) => {
     const container = document.getElementById('app');
-    const { store, reactContext, route, AppOverride } = context;
+    const { store, reactContext, route, Components } = context;
     const { component } = route;
-    const AppComponent = AppOverride || App;
+    const { Providers } = Components;
     try {
       ReactDOM.render(
         <App store={store} context={reactContext}>
-          {component}
+          <Providers context={reactContext}>{component}</Providers>
         </App>,
         container,
         () => resolve(context)
@@ -128,7 +137,7 @@ async function reRunSagas(context) {
 
 async function reActivateSagas(context) {
   const { store, sagas } = context;
-  store.runSaga(sagas);
+  sagas && store.runSaga(sagas);
   return registerRoute(context);
 }
 
@@ -212,18 +221,19 @@ async function handleHistoryEvents(context) {
 function hydrateSSR(context) {
   return new Promise((resolve, reject) => {
     const container = document.getElementById('app');
-    const { store, reactContext, route, AppOverride } = context;
+    const { store, reactContext, route, Components } = context;
     const { component } = route;
-    const AppComponent = AppOverride || App;
+    const { Providers } = Components;
     try {
       ReactDOM.hydrate(
         <App store={store} context={reactContext}>
-          {component}
+          <Providers context={reactContext}>{component}</Providers>
         </App>,
         container,
         () => resolve(context)
       );
     } catch (err) {
+      console.log(err);
       reject(err);
     }
   });
@@ -237,7 +247,7 @@ async function onHydrationComplete(context) {
 
 async function bootstrapApp(context) {
   const { bootstrap } = context;
-  bootstrap(context);
+  bootstrap && bootstrap(context);
   return context;
 }
 
@@ -253,5 +263,6 @@ export default async function createClient(options = {}) {
     .then(registerRoute)
     .then(hydrateSSR)
     .then(onHydrationComplete)
-    .then(handleHistoryEvents);
+    .then(handleHistoryEvents)
+    .catch(err => console.log(err));
 }

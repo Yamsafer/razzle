@@ -3,7 +3,6 @@ import generateUrls from 'universal-router/generateUrls';
 
 export default async function createRouter(context) {
   const { routes, protectedRouteRedirectUrl } = context;
-  console.log(routes);
   const router = new UniversalRouter(routes, {
     resolveRoute(routeResolveContext, params) {
       const { route, pathname, isUserLoggedIn } = routeResolveContext;

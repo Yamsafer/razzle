@@ -11,6 +11,9 @@ import isSupportedBrowser from './isSupportedBrowser';
 import getUserAgent, { getParsedUserAgent } from './getUserAgent';
 import cookie, { plugToRequest } from 'react-cookie';
 import isbot from 'isbot';
+
+import DefaultLayout from '../components/Layout';
+
 const defaultComputeCacheKey = context => null;
 
 export default async function(req, res, configs) {
@@ -32,9 +35,16 @@ export default async function(req, res, configs) {
   const countryCode = await getCountryCode(req, userIp);
   const isBot = isbot(userAgent);
 
-  // //TODO: Fill these
-  // const userCurrency = req.cookies['sails.sid'];
-  // const isUserLoggedIn = false;
+  const Components = Object.assign(
+    {},
+    {
+      Layout: DefaultLayout,
+      // PageNotFound,
+      // PageServerError,
+      // Providers,
+    },
+    configs.Components
+  );
 
   const session = {
     query,
@@ -48,6 +58,7 @@ export default async function(req, res, configs) {
     isYamsaferIp,
     id: sessionId,
   };
+
   const contextConfigs = { locale, device, userAgent, userIp };
   const reactContext = {
     configs: contextConfigs,
@@ -58,6 +69,7 @@ export default async function(req, res, configs) {
     isRTL,
     parsedUserAgent,
   };
+
   const computeCacheKey = configs.computeCacheKey || defaultComputeCacheKey;
 
   return {
@@ -72,6 +84,7 @@ export default async function(req, res, configs) {
     computeCacheKey,
     queryString,
     bootstrap: _ => _,
+    Components,
     ...configs,
   };
 }

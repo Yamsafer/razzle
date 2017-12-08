@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/server';
 import createFragments from '../utils/createHtml';
-import DefaultLayout from '../components/Layout';
 
 export default async function(context) {
   const {
@@ -12,8 +11,13 @@ export default async function(context) {
     reactContext,
     Layout: UserLayout,
     session: { locale },
+    Components,
   } = context;
+
+  const { Layout, Providers } = Components;
+
   const Fragments = createFragments({
+    Providers,
     route,
     store,
     locale,
@@ -22,7 +26,6 @@ export default async function(context) {
     assets,
   });
   const state = store.getState();
-  const Layout = UserLayout || DefaultLayout;
   const renderProps = { state, context, ...Fragments };
   const html = ReactDOM.renderToStaticMarkup(<Layout {...renderProps} />);
   return { html };
